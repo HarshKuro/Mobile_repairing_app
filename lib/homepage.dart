@@ -8,6 +8,9 @@ import 'package:intl/intl.dart';
 import 'add.dart';
 import 'calendar_screen.dart';
 import 'database_helper.dart';
+import 'edit.dart';
+import 'theme_manager.dart';
+import 'package:provider/provider.dart';
 // Import the calendar screen
 
 class MyHomePage extends StatefulWidget {
@@ -21,6 +24,12 @@ class _MyHomePageState extends State<MyHomePage> {
   String _currentTime = '';
   String _currentDate = '';
   List<Customer> customers = [];
+  bool _showCustomers = true;
+  void _toggleCustomersVisibility() {
+    setState(() {
+      _showCustomers = !_showCustomers;
+    });
+  }
 
   @override
   void initState() {
@@ -30,7 +39,6 @@ class _MyHomePageState extends State<MyHomePage> {
     _refreshCustomers(); // This is the correct function to call here
   }
 
-
   void _refreshCustomers() async {
     List<Customer> customerList =
         await DatabaseHelper.instance.queryAllCustomers();
@@ -39,11 +47,23 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void _showEditCustomerDialog(BuildContext context, Customer customer) {
-    // TODO: Implement edit customer logic
-    // You can use 'customer.name' and 'customer.phone' to pre-fill the fields
-    // in the edit dialog.
-    print('Edit customer: ${customer.name}');
+  void _showEditCustomerDialog(BuildContext context, Customer customer) async {
+    final updatedCustomer = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditCustomerScreen(customer: customer),
+      ),
+    );
+
+    if (updatedCustomer != null) {
+      setState(() {
+        // Find the index of the customer in the list
+        int index = customers.indexOf(customer);
+
+        // Update the customer in the list
+        customers[index] = updatedCustomer as Customer;
+      });
+    }
   }
 
   void _updateDateTime() {
@@ -84,7 +104,13 @@ class _MyHomePageState extends State<MyHomePage> {
           content: Text("Are you sure you want to delete  ${customer.name}?"),
           actions: [
             TextButton(
-              onPressed: () {
+              onPressed: () async {
+                // Delete from database
+                await DatabaseHelper.instance.deleteCustomer(customer.id!);
+
+                setState(() {
+                  customers.remove(customer);
+                });
                 Navigator.of(context).pop();
               },
               child: const Text("Cancel"),
@@ -129,6 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
               // Handle notification button press
             },
           ),
+
           IconButton(
             icon:
                 const Icon(Icons.calendar_month_outlined, color: Colors.white),
@@ -138,6 +165,12 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: const Icon(Icons.more_vert, color: Colors.white),
             onPressed: () {
               // Handle more options button press
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.brightness_4_outlined),
+            onPressed: () {
+              Provider.of<ThemeManager>(context, listen: false).toggleTheme();
             },
           ),
         ],
@@ -253,9 +286,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Row(
                   children: [
                     TextButton(
-                      onPressed: () {
-                        // Handle "Show all" button press
-                      },
+                      onPressed: _toggleCustomersVisibility,
                       child: const Text(
                         "Show all",
                         style: TextStyle(color: Colors.blue),

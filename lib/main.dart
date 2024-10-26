@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
-import 'splash_screen.dart'; 
+import 'package:provider/provider.dart';
+
+import 'splash_screen.dart';
+import 'theme_manager.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeManager(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -12,10 +20,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Mobile Repair Shop',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const SplashScreen(), // This line is important!
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      themeMode: Provider.of<ThemeManager>(context).themeMode, // Use the themeMode from ThemeManager
+      home: const SplashScreen(),
     );
   }
 }

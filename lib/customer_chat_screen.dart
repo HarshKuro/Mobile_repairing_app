@@ -7,8 +7,7 @@ import 'message.dart';
 class CustomerChatScreen extends StatefulWidget {
   final Customer customer;
 
-  const CustomerChatScreen({Key? key, required this.customer})
-      : super(key: key);
+  const CustomerChatScreen({super.key, required this.customer});
 
   @override
   State<CustomerChatScreen> createState() => _CustomerChatScreenState();
