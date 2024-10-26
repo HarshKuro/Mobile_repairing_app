@@ -251,6 +251,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.2"
+  random_quote_gen:
+    dependency: "direct main"
+    description:
+      name: random_quote_gen
+      sha256: "3292f2c336e87b6fd05eb39495a11bd1fc11cdd404b80c91f9455f07cf89a321"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   simple_gesture_detector:
     dependency: transitive
     description:

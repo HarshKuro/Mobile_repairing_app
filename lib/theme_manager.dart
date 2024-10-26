@@ -1,3 +1,4 @@
+// In theme_manager.dart
 import 'package:flutter/material.dart';
 
 class ThemeManager with ChangeNotifier {

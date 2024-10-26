@@ -8,6 +8,10 @@ import 'package:intl/intl.dart';
 import 'add.dart';
 import 'calendar_screen.dart';
 import 'database_helper.dart';
+import 'theme_manager.dart';
+import 'package:provider/provider.dart';
+import 'package:random_quote_gen/random_quote_gen.dart';
+
 // Import the calendar screen
 
 class MyHomePage extends StatefulWidget {
@@ -29,7 +33,6 @@ class _MyHomePageState extends State<MyHomePage> {
     Timer.periodic(const Duration(seconds: 1), (Timer t) => _updateDateTime());
     _refreshCustomers(); // This is the correct function to call here
   }
-
 
   void _refreshCustomers() async {
     List<Customer> customerList =
@@ -127,6 +130,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.white),
             onPressed: () {
               // Handle notification button press
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.brightness_4_outlined),
+            onPressed: () {
+              Provider.of<ThemeManager>(context,listen: false).toggleTheme();
             },
           ),
           IconButton(

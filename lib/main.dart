@@ -1,8 +1,9 @@
+// In main.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'splash_screen.dart';
-import 'theme_manager.dart';
+import 'theme_manager.dart'; // Import your theme manager
 
 void main() {
   runApp(
@@ -14,7 +15,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
       title: 'Mobile Repair Shop',
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      themeMode: Provider.of<ThemeManager>(context).themeMode, // Use the themeMode from ThemeManager
+      themeMode: Provider.of<ThemeManager>(context).themeMode,
       home: const SplashScreen(),
     );
   }
