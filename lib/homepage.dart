@@ -10,7 +10,6 @@ import 'calendar_screen.dart';
 import 'database_helper.dart';
 import 'theme_manager.dart';
 import 'package:provider/provider.dart';
-import 'package:random_quote_gen/random_quote_gen.dart';
 
 // Import the calendar screen
 
@@ -221,9 +220,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         bottom: 10,
                         right: 10,
                         child: Icon(
-                          Icons.square,
+                          Icons.circle,
                           size: 40,
-                          color: Colors.amber[700],
+                          color: Colors.purple[700],
                         ),
                       ),
                     ],

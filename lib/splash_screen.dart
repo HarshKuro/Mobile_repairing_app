@@ -40,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [Color.fromARGB(255, 0, 0, 0), Color.fromARGB(255, 200, 195, 201)],
+              colors: [Color.fromARGB(255, 0, 0, 0), Color.fromARGB(255, 41, 6, 48)],
             ),
           ),
           child: Center(
@@ -52,17 +52,17 @@ class _SplashScreenState extends State<SplashScreen> {
                 children: [
                   ClipOval(
                     child: Image.asset(
-                      'assets/images/splash_logo.png', // Replace with your actual logo path
+                      'assets/images/icon.png', // Replace with your actual logo path
                       width: 200,
                     ),
                   ),
                   const SizedBox(height: 20),
                   const Text(
-                    'VMDH',
+                    'Alpha Testing',
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 32,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Color.fromARGB(255, 83, 7, 60),
                     ),
                   ),
                 ],

@@ -17,6 +17,7 @@ dependencies:
   path: ^1.8.0  
   provider: ^6.0.5 
   random_quote_gen:
+  dynamic_color: ^1.7.0
 
 
 dev_dependencies:
