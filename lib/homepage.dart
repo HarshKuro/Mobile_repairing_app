@@ -10,6 +10,7 @@ import 'calendar_screen.dart';
 import 'database_helper.dart';
 import 'theme_manager.dart';
 import 'package:provider/provider.dart';
+import 'edit.dart';
 
 // Import the calendar screen
 
@@ -41,11 +42,23 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void _showEditCustomerDialog(BuildContext context, Customer customer) {
-    // TODO: Implement edit customer logic
-    // You can use 'customer.name' and 'customer.phone' to pre-fill the fields
-    // in the edit dialog.
-    print('Edit customer: ${customer.name}');
+  void _showEditCustomerDialog(BuildContext context, Customer customer) async {
+    final updatedCustomer = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditCustomerScreen(customer: customer),
+      ),
+    );
+
+    if (updatedCustomer != null) {
+      setState(() {
+        // Find the index of the customer in the list
+        int index = customers.indexOf(customer);
+
+        // Update the customer in the list
+        customers[index] = updatedCustomer as Customer;
+      });
+    }
   }
 
   void _updateDateTime() {
@@ -134,7 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
           IconButton(
             icon: const Icon(Icons.brightness_4_outlined),
             onPressed: () {
-              Provider.of<ThemeManager>(context,listen: false).toggleTheme();
+              Provider.of<ThemeManager>(context, listen: false).toggleTheme();
             },
           ),
           IconButton(
