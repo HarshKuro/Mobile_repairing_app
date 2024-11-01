@@ -13,25 +13,23 @@ class Message {
     required this.isSent,
   });
 
-  // Convert a Message object to a map
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'customerId': customerId,
       'message': message,
       'timestamp': timestamp,
-      'isSent': isSent ? 1 : 0, // Store boolean as integer in SQLite
+      'isSent': isSent ? 1 : 0,
     };
   }
 
-  // Create a Message object from a map (database row)
   factory Message.fromMap(Map<String, dynamic> map) {
     return Message(
       id: map['id'],
       customerId: map['customerId'],
       message: map['message'],
       timestamp: map['timestamp'],
-      isSent: map['isSent'] == 1, // Convert integer back to boolean
+      isSent: map['isSent'] == 1,
     );
   }
 }

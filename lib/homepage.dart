@@ -90,34 +90,37 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void _showDeleteConfirmationDialog(BuildContext context, Customer customer) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Confirm Delete"),
-          content: Text("Are you sure you want to delete  ${customer.name}?"),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("Cancel"),
-            ),
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  customers.remove(customer);
-                });
-                Navigator.of(context).pop();
-              },
-              child: const Text("Delete"),
-            ),
-          ],
-        );
-      },
-    );
-  }
+void _showDeleteConfirmationDialog(BuildContext context, Customer customer) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text("Confirm Delete"),
+        content: Text("Are you sure you want to delete ${customer.name}?"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // Close the dialog
+            },
+            child: const Text("Cancel"),
+          ),
+          TextButton(
+            onPressed: () async {  // Make the onPressed callback async
+              // Delete the customer from the database
+              await DatabaseHelper.instance.deleteCustomer(customer.id!); 
+
+              setState(() {
+                customers.remove(customer);
+              });
+              Navigator.of(context).pop();
+            },
+            child: const Text("Delete"),
+          ),
+        ],
+      );
+    },
+  );
+}
 
   // ... (rest of your code) ...
 
